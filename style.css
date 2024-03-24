@@ -1,0 +1,20 @@
+#topo{
+    
+    background: url(img/Background/bandeira2.jpg);	
+    height:210px;
+    margin-bottom:10px;
+}
+
+body{
+    background: url(img/Background/TESTANDO.jpg);
+
+}
+
+
+.container{
+      text-align: center;
+
+}
+#conteudo{
+    border: 2px solid #888;
+}
