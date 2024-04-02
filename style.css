@@ -6,15 +6,51 @@
 }
 
 body{
-    background: url(img/Background/TESTANDO.jpg);
-
+    background-color: rgb(177, 145, 145) ;
 }
-
 
 .container{
       text-align: center;
-
 }
+
 #conteudo{
-    border: 2px solid #888;
+    background-color: #e2d878;   
+    
+}
+
+.texto {
+    margin: 50px;
+    color: #000000;
+    text-align: justify;    
+    font-size: 25px;    
+    margin-top: 15px;
+    font-style: italic;
+    text-shadow: 1px 1px 2px #888
+}
+
+h2{
+    color: #000093;
+    text-transform: uppercase;
+    font-size: 20px;    
+    margin-top: 30px;
+    font-style: italic;
+    text-shadow: 1px 1px 2px #888; 
+}
+h3{
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+#rodape {
+    background-color: #d9e0bf;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    text-align: center;
+    padding: 1px;
+}
+
+h4{
+    font-size: 14px;
+    color: #131313;
+    font-style: italic;
 }
