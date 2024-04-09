@@ -97,3 +97,13 @@ h6 {
 .img-thumbnailE{
     margin-left: 30px;
 }
+ul{
+    text-align: justify;
+    color: #000000;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 0;
+    text-indent: 2.0em;
+    margin-left: 35px;
+    margin-right: 1px;
+}
