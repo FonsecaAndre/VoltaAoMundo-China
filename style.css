@@ -1,44 +1,48 @@
-#topo{
-    
-    background: url(img/Background/bandeira2.jpg);	
-    height:210px;
-    margin-bottom:10px;
+#topo {
+
+    background: url(img/Background/bandeira2.jpg);
+    height: 210px;
+    margin-bottom: 10px;
 }
 
-body{
-    background-color: rgb(177, 145, 145) ;
+body {
+    background-color: rgb(177, 145, 145);
 }
 
-.container{
-      text-align: center;
+.container {
+    text-align: center;
 }
 
-#conteudo{
-    background-color: #e2d878;   
-    
+#conteudo {
+
+    background-color: #ffffff;
+
 }
 
 .texto {
     margin: 50px;
     color: #000000;
-    text-align: justify;    
-    font-size: 25px;    
+    text-align: justify;
+    font-size: 25px;
     margin-top: 15px;
     font-style: italic;
     text-shadow: 1px 1px 2px #888
 }
 
-h2{
-    color: #000093;
+h2 {
+    color: #050505;
     text-transform: uppercase;
-    font-size: 20px;    
+    font-size: 28px;
     margin-top: 30px;
-    font-style: italic;
-    text-shadow: 1px 1px 2px #888; 
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-shadow: 1px 1px 2px #888;
 }
-h3{
+
+h3 {
+    color: #000000;
     text-transform: uppercase;
     font-size: 18px;
+
 }
 
 #rodape {
@@ -47,10 +51,43 @@ h3{
     font-style: italic;
     text-align: center;
     padding: 1px;
+
 }
 
-h4{
+h4 {
     font-size: 14px;
     color: #131313;
     font-style: italic;
+}
+
+.img-thumbnail {
+    margin-top: 30px;
+    border: #e2d878;
+    */ text-align: justify;
+    color: #000000;
+
+    /* margin-left: 10px;
+    margin-right: 10px;*/
+
+}
+
+p {
+    text-align: justify;
+    color: #000000;
+    padding: 10px;
+    font-size: 20px;
+    margin-bottom: 0;
+    text-indent: 2.0em;
+}
+
+h6 {
+    text-align: left;
+    font-size: 10px;
+    color: #131313;
+    font-style: italic;
+
+}
+
+.table-striped{
+    font-size: 16px;
 }
