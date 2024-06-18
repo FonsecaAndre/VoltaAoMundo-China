@@ -43,8 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="container">
             <h1 class="display-1"><img src="../img/Background/logo2.png" width="295" height="300"></h1>
 
-            <a href="../adm/usuario-listar.php" class="btn btn-warning">USUÁRIOS</a>
-            <a href="mensagem-backup.php" class="btn btn-primary">Backup</a>
+            <a href="usu-mensagem-backup.php" class="btn btn-primary">Backup</a>
             <a href="../adm/usuario-logout.php" class="btn btn-light">SAIR</a>
             <br>
             <div class="d-flex align-items-center">
@@ -89,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </form>
                                 </td>
                                 <td>
-                                    <a href="mensagem-editar.php?id=<?= $linha['Id']; ?>" class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="usu-mensagem-editar.php?id=<?= $linha['Id']; ?>" class="btn btn-warning btn-sm">Editar</a>
                                     <a href="mensagem-excluir.php?id=<?= $linha['Id']; ?>" class="btn btn-danger btn-sm">Excluir</a>
                                 </td>
                             </tr>

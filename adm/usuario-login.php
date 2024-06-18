@@ -1,37 +1,28 @@
 <?php
-$usuario = $_POST['usuario'];
-$senha = $_POST['senha'];
 
-$sql = "SELECT * FROM tb_usuarios
-        WHERE usuario = '{$usuario}'
-        AND senha = '{$senha}'";
+$usuarioInput = $_POST['usuario'];
+$senhaInput = $_POST['senha'];
 
 include "../classes/conexao.php";
 
-$resultado = $conexao->query($sql);
-$linha = $resultado->fetch();
-$usuario_logado = $linha['usuario'];
-$permissao = $linha['permisao'];
+$sql = "SELECT * FROM tb_usuario WHERE usuario = :usuario";
+$stmt = $conexao->prepare($sql);
+$stmt->bindParam(':usuario', $usuarioInput);
+$stmt->execute();
 
+$linha = $stmt->fetch();
 
-if ($permissao == 'adm'){
-	if ($usuario_logado == null) {
-		// Usuário ou senha inválida
-		header('Location: usuario-erro.php');
-	} 
-	else {
-		session_start();
-		$_SESSION['usuario_logado'] = $usuario_logado;
-		header('Location: index_adm.php');
-	}
+if ($linha && password_verify($senhaInput, $linha['senha'])) {
+    session_start();
+    $_SESSION['usuario_logado'] = $linha['usuario'];
+    $_SESSION['permissao'] = $linha['permissao'];
+
+    if ($linha['permissao'] == 'adm') {
+        header('Location: index_adm.php');
+    } else {
+        header('Location: ../mensagens/usu-mensagem-listar.php');
+    }
 } else {
-	if ($usuario_logado == null) {
-		// Usuário ou senha inválida
-		header('Location: usuario-erro.php');
-	} 
-	else {
-		session_start();
-		$_SESSION['usuario_logado'] = $usuario_logado;
-		header('Location: index_usu.php');
-	}
+    header('Location: usuario-erro.php');
 }
+?>

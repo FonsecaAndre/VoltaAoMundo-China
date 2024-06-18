@@ -24,7 +24,7 @@
 
 
             <a href="../mensagens/mensagem-listar.php" class="btn btn-warning">MENSAGENS</a>
-            <a href="#" class="btn btn-warning">USUÁRIOS</a> 
+            <a href="usuario-listar.php" class="btn btn-warning">USUÁRIOS</a> 
                                  
             <br><br>
 

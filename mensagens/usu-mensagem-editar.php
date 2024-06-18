@@ -73,9 +73,8 @@ $comentario = htmlspecialchars($mensagem->comentario);
             <h1><img src="../img/Background/logo2.png" width="295" height="300"></h1>
                 
             <div class="my-1">
-                <a href="../mensagens/mensagem-listar.php" class="btn btn-warning">MENSAGENS</a>
-                <a href="../adm/usuario-listar.php" class="btn btn-warning">USUÁRIOS</a>
-                <a href="mensagem-backup.php" class="btn btn-primary">Backup</a>
+                <a href="../mensagens/usu-mensagem-listar.php" class="btn btn-warning">MENSAGENS</a>
+                <a href="../mensagens/usu-mensagem-backup.php" class="btn btn-primary">Backup</a>
                 <a href="../adm/usuario-logout.php" class="btn btn-light">SAIR</a>
                 <br>
             </div>
@@ -111,7 +110,7 @@ $comentario = htmlspecialchars($mensagem->comentario);
                         <textarea class="form-control" name="comentario" rows="4" required><?= $comentario ?></textarea>
                     </div>
                     <div class="text-center">
-                        <a class="btn btn-cancel mr-2" href="mensagem-listar.php">Cancelar</a>
+                        <a class="btn btn-cancel mr-2" href="../mensagens/usu-mensagem-listar.php">Cancelar</a>
                         <button type="submit" class="btn btn-success">Salvar</button>
                     </div>
                 </form>

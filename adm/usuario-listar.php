@@ -1,22 +1,12 @@
 <?php
-require_once '../adm/usuario-verifica.php'; // Verifica se o usuário está logado
-require_once '../classes/Mensagem.php';
+require_once '../adm/usuario-verifica.php';
+require_once '../classes/Usuario.php';
 
-$mensagem = new Mensagem();
-$lista = $mensagem->listar();
+$usuario = new Usuario();
+$lista = $usuario->listar();
 
-$usuarioNome = $_SESSION['usuario_logado']; // Recupera o nome do usuário logado da sessão
+$usuarioNome = $_SESSION['usuario_logado']; // Alterado para 'usuario_logado' pois é o índice correto da sessão
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['aprovar'])) {
-        $id = $_POST['id'];
-        $mensagem->aprovarMensagem($id); // Método para aprovar a mensagem
-    }
-    if (isset($_POST['reprovar'])) {
-        $id = $_POST['id'];
-        $mensagem->reprovarMensagem($id); // Método para reprovar a mensagem
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
 
-    <title>Volta ao Mundo - CHINA</title>
+    <title>Painel Administrativo - Usuários</title>
 
     <style>
         .table-custom {
@@ -43,10 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="container">
             <h1 class="display-1"><img src="../img/Background/logo2.png" width="295" height="300"></h1>
 
-            <a href="../adm/usuario-listar.php" class="btn btn-warning">USUÁRIOS</a>
-            <a href="mensagem-backup.php" class="btn btn-primary">Backup</a>
+            <a href="../mensagens/mensagem-listar.php" class="btn btn-warning">MENSAGENS</a>
+            <a href="usu-cad.php" class="btn btn-primary">Cadastrar</a>
             <a href="../adm/usuario-logout.php" class="btn btn-light">SAIR</a>
-            <br>
+            <br><br>
             <div class="d-flex align-items-center">
                 <span class="mr-3"><h3>Bem-vindo, <?php echo htmlspecialchars($usuarioNome); ?></span></h3>
             </div>
@@ -54,17 +44,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <br>
 
         <div class="container my-5">
-            <h1>Listar Mensagens</h1>
+            <h1>Listar Usuários</h1>
             
             <table class="table table-striped table-custom">
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Comentário</th>
-                        <th>Aprovar</th>
-                        <th>Reprovar</th>
+                        <th>Nome Completo</th>
+                        <th>Usuário</th>
+                        <th>Permissão</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -73,30 +61,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php foreach ($lista as $linha) : ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($linha['Id']); ?></td>
-                                <td><?php echo htmlspecialchars($linha['nome']); ?></td>
-                                <td><?php echo htmlspecialchars($linha['email']); ?></td>
-                                <td><?php echo htmlspecialchars($linha['comentario']); ?></td>
+                                <td><?php echo htmlspecialchars($linha['nomeCompleto']); ?></td>
+                                <td><?php echo htmlspecialchars($linha['usuario']); ?></td>
+                                <td><?php echo htmlspecialchars($linha['permissao']); ?></td>
                                 <td>
-                                    <form method="POST" action="">
-                                        <input type="hidden" name="id" value="<?php echo $linha['Id']; ?>">
-                                        <button type="submit" name="aprovar" class="btn btn-success" <?php echo $linha['aprovada'] ? 'disabled' : ''; ?>>Aprovar</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form method="POST" action="">
-                                        <input type="hidden" name="id" value="<?php echo $linha['Id']; ?>">
-                                        <button type="submit" name="reprovar" class="btn btn-danger" <?php echo !$linha['aprovada'] ? 'disabled' : ''; ?>>Reprovar</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <a href="mensagem-editar.php?id=<?= $linha['Id']; ?>" class="btn btn-warning btn-sm">Editar</a>
-                                    <a href="mensagem-excluir.php?id=<?= $linha['Id']; ?>" class="btn btn-danger btn-sm">Excluir</a>
+                                    <a href="usuario-editar.php?id=<?= $linha['Id']; ?>" class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="usuario-excluir.php?id=<?= $linha['Id']; ?>" class="btn btn-danger btn-sm">Excluir</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else : ?>
                         <tr>
-                            <td colspan="7">Nenhum registro encontrado</td>
+                            <td colspan="5">Nenhum registro encontrado</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

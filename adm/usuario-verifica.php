@@ -3,7 +3,7 @@
     
     if (!isset($_SESSION['usuario_logado'])) {
         //Você não tem acesso a esta funcionalidade
-        header('Location: ../contato.html');        
+        header('Location: ../adm/adm-login.html');        
     }
     
 ?>

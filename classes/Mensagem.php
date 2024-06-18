@@ -1,124 +1,131 @@
 <?php
 
 class Mensagem
-
 {
-
     public $id;
-
     public $nome;
-
     public $email;
-
     public $comentario;
+    public $aprovada;
 
-    // define um método construtor na classe e recebe um parâmetro opcional $id
     public function __construct($id = false)
     {
-        // verifica se a variável $id foi definida
         if ($id) {
-            // atribui o valor de $id à propriedade $id do objeto
             $this->id = $id;
-            // chama o método carregar() para carregar as informações correspondente ao id
             $this->carregar();
         }
     }
 
-
     public function inserir()
     {
+        include 'conexao.php';
 
+        $sql = "INSERT INTO tb_mensagem (nome, email, comentario, aprovada) VALUES (:nome, :email, :comentario, :aprovada)";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':nome', $this->nome);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':comentario', $this->comentario);
+        // Definindo como não aprovada por padrão
+        $aprovada = 0;
+        $stmt->bindParam(':aprovada', $aprovada);
 
-        //Define a string SQL de inserção de dados na tabela "tb_mensagem"
-        $sql = "INSERT INTO tb_mensagem (nome, email, comentario) VALUES (
-                 '{$this->nome}',
-                    '{$this->email}',
-                    '{$this->comentario}'
-                    )";
-
-        //Cria uma nova conexão PDO com o banco de dados "volta_ao_mundo_china"
-        include "../classes/conexao.php";
-        /*******MUNDANÇA DE CAMINHO*****/
-
-        //Executa a string SQL na conexão, inserindo os dados na tabela "tb_mensagem"
-        $conexao->exec($sql);
+        $stmt->execute();
 
         echo "
         <script type='text/javascript'>
             alert('Comentário enviado com sucesso');
             setTimeout(function() {
-                window.location.href = '../contato.html';
-            }, 1000); // 1000 milissegundos = 1 segundo
+                window.location.href = '../comentarios.php';
+            }, 1000);
         </script>
         ";
     }
 
     public function listar()
     {
-        //Define a string SQL para selecionar os registros de tabela
+        include 'conexao.php';
+
         $sql = "SELECT * FROM tb_mensagem";
+        $stmt = $conexao->prepare($sql);
+        $stmt->execute();
 
-        //Cria uma nova conexão PDO com o banco de dados "volta_ao_mundo_china"
-        include "conexao.php";
-        /*******MUNDANÇA DE CAMINHO*****/
-
-        //Executa a string SQL na conexão, retornando um objeto de resultado
-        $resultado = $conexao->query($sql);
-
-        //Extrai todos os registros do objeto e coloca-os em um array
-        $lista = $resultado->fetchAll();
-
-        //Retorna o array contendo todos os registros da tabela "tb_aluno"
-        return $lista;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function excluir()
     {
-        // Define a string de consulta SQL para deletar um registro
-        // da tabela "tb_turmas" com base no seu ID
-        $sql = "DELETE FROM tb_mensagem WHERE id=" . $this->id;
+        include 'conexao.php';
 
-        // Cria uma nova conexão PDO com o banco de dados "volta_ao_mundo_china" localizado
-        // no servidor "127.0.0.1" e autentica com o usuário "root" (sem senha)
-        include "conexao.php";
-        /*******MUNDANÇA DE CAMINHO*****/
+        $sql = "DELETE FROM tb_mensagem WHERE id = :id";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':id', $this->id);
 
-        // Executa a instrução SQL de exclusão utilizando o método
-        // "exec" do objeto de conexão PDO criado acima
-        $conexao->exec($sql);
+        $stmt->execute();
     }
 
     public function carregar()
     {
-        // Query SQL para buscar uma turma no banco de dados pelo id
-        $sql = "SELECT * FROM tb_mensagem WHERE id=" . $this->id;
-        include "conexao.php";
-        /*******MUNDANÇA DE CAMINHO*****/
+        include 'conexao.php';
 
-        // Execução da query e armazenamento do resultado em uma variável
-        $resultado = $conexao->query($sql);
-        // Recuperação da primeira linha do resultado como um array associativo
-        $linha = $resultado->fetch();
+        $sql = "SELECT * FROM tb_mensagem WHERE id = :id";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
 
-        // Atribuição dos valores dos campos da turma recuperados do banco às propriedades do objeto
+        $linha = $stmt->fetch(PDO::FETCH_ASSOC);
+
         $this->nome = $linha['nome'];
         $this->email = $linha['email'];
         $this->comentario = $linha['comentario'];
+        $this->aprovada = $linha['aprovada'];
     }
-
 
     public function atualizar()
     {
-        // Query SQL para atualizar uma mensagem no banco de dados pelo id
-        $sql = "UPDATE tb_mensagem SET 
-                    nome = '$this->nome' ,
-                    email = '$this->email' ,
-                    comentario = '$this->comentario' 
+        include 'conexao.php';
 
-                WHERE id = $this->id ";
+        $sql = "UPDATE tb_mensagem SET nome = :nome, email = :email, comentario = :comentario WHERE id = :id";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':nome', $this->nome);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':comentario', $this->comentario);
+        $stmt->bindParam(':id', $this->id);
 
-        include "conexao.php";
-        /*******MUNDANÇA DE CAMINHO*****/
-        $conexao->exec($sql);
+        $stmt->execute();
+    }
+
+    public function aprovarMensagem($id)
+    {
+        include 'conexao.php';
+    
+        $sql = "UPDATE tb_mensagem SET aprovada = 1 WHERE id = :id";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':id', $id);
+    
+        $stmt->execute();
+    }
+    
+    public function reprovarMensagem($id)
+    {
+        include 'conexao.php';
+    
+        $sql = "UPDATE tb_mensagem SET aprovada = 0 WHERE id = :id";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindParam(':id', $id);
+    
+        $stmt->execute();
+    }
+    
+    public function listarAprovadas()
+    {
+        include 'conexao.php';
+    
+        $sql = "SELECT * FROM tb_mensagem WHERE aprovada = 1";
+        $stmt = $conexao->prepare($sql);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+
+?>
